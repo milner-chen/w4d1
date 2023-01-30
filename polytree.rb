@@ -84,7 +84,7 @@ class PolyTreeNode
     child.parent = nil
   end
 
-  protected
+  # protected
   
   # Protected method to give a node direct access to another node's
   # children.
