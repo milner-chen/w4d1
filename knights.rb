@@ -46,15 +46,34 @@ class KnightPathFinder
     def to_s
         @value
     end 
+
+    require "byebug"
+    def find_path(end_pos)
+        # debugger
+        result = root_node.bfs(end_pos)
+        # return result.value
+        trace_path_back(result)
+    end
+    
+    def trace_path_back(result)
+        node_path = [result]
+        value_path = [result.value]
+        while node_path[0].parent != nil
+            node_path.unshift(node_path[0].parent)
+            value_path.unshift(node_path[0].parent.value)
+        end
+        value_path
+    end
     
 end 
 
  
 
 
-p kpf = KnightPathFinder.new([0, 0])
-p kpf.considered_positions.length 
+kpf = KnightPathFinder.new([0, 0])
+# p kpf.considered_positions.length 
 
+p kpf.find_path([2,1])
 
 #  p kpf.root_node
 
