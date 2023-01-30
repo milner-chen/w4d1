@@ -10,6 +10,10 @@ class KnightPathFinder
     end
 
     def build_move_tree(root_node)
+        nodes = [root_node]
+        until nodes.empty?
+            node = nodes.shift
+            nodes.concat(node.children)
     end 
 
     def self.valid_moves(root_node)
@@ -23,6 +27,7 @@ class KnightPathFinder
     def inspect
         @value.inspect
     end 
+    
 end 
 
  kpf = KnightPathFinder.new([0, 0])
@@ -37,8 +42,8 @@ pos_2.parent = kpf.root_node
 
 #  kpf.root_node
  KnightPathFinder.valid_moves(kpf.root_node)
-p kpf.new_move_positions(kpf.root_node)
-p kpf.considered_positions.each do |ele|
-    p ele
-end  
+# p kpf.new_move_positions(kpf.root_node)
+# p kpf.considered_positions.each do |ele|
+#     p ele
+# end  
 
