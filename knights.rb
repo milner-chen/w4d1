@@ -8,22 +8,25 @@ class KnightPathFinder
    @@movements = [[2, 1], [2, -1], [-2, 1], [-2, -1], [1, 2], [1,-2], [-1, 2], [-1, -1]]
     def initialize(pos)
         @root_node = PolyTreeNode.new(pos)
-        build_move_tree(root_node)
         @considered_positions = [pos]
+        build_move_tree(root_node)
     end
 
     def build_move_tree(root_node)
-        positions = []
         nodes = [root_node]
         until nodes.empty?
-            node = nodes.shift
-            positions << node.value  
-            nodes.concat(node.children)
+            node = nodes.shift 
+            new_pos = (new_move_positions(node.value))
+            new_pos.map! {|pos| PolyTreeNode.new(pos)} 
+            p new_pos
+            new_pos.each {|ele| ele.parent = node}
+            nodes.concat(new_pos) 
+            #iterate and turn into nodes #add as children to 'node' #parent= 
         end 
-        return positions 
     end 
-    def self.valid_moves(root_node) 
-        pos = root_node.value
+
+    def self.valid_moves(pos) 
+        pos  #value
         moves = @@movements.map do |el|
             [pos[0] + el[0], pos[1] + el[1]] 
         end
@@ -40,25 +43,32 @@ class KnightPathFinder
         return new_moves
     end 
 
-    def inspect
-        @value.inspect
+    def to_s
+        @value
     end 
     
 end 
 
- kpf = KnightPathFinder.new([0, 0])
- p kpf.root_node
+ 
 
-pos_1 = PolyTreeNode.new([1,0])
-pos_2 = PolyTreeNode.new([0,1])
-kpf.root_node.add_child(pos_1)
-kpf.root_node.add_child(pos_2)
-pos_1.parent = kpf.root_node
-pos_2.parent = kpf.root_node
+
+p kpf = KnightPathFinder.new([0, 0])
+p kpf.considered_positions.length 
+
+
+#  p kpf.root_node
+
+# pos_1 = PolyTreeNode.new([1,0])
+# pos_2 = PolyTreeNode.new([0,1])
+# kpf.root_node.add_child(pos_1)
+# kpf.root_node.add_child(pos_2)
+# pos_1.parent = kpf.root_node
+# pos_2.parent = kpf.root_node
 
 #  kpf.root_node
-p kpf.new_move_positions(kpf.root_node)
-p kpf.considered_positions
+# p kpf.new_move_positions(kpf.root_node)
+# p kpf.considered_positions
+
 
 # end  
 
